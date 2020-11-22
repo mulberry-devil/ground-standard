@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/manager/managerinfo}">
+    <p th:text="${msg}" th:if="${not #strings.isEmpty(msg)}" />
+    <label>管理员ID</label>
+    <input type="text" name="loginId" required>
+    <button type="submit">登录</button>
+</form>
+</body>
+</html>

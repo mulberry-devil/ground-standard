@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.taobao.groundstandard.dao.ManagerMapper">
+    <insert id="insertStall">
+        insert into stall(id,position,area,info) values (#{id},#{position},#{area},#{info});
+    </insert>
+    <update id="updateInfo">
+        UPDATE `user` SET integral=integral+#{integral} WHERE id=#{userId};
+    </update>
+    <update id="updateStatus">
+        UPDATE manager_user_stall
+        SET `status`=1
+        WHERE user_id=#{userId} AND start_time=#{startTime};
+    </update>
+    <update id="updateStall">
+        update stall set position=#{position},area=#{area},info=#{info} where id=#{id};
+    </update>
+    <delete id="deleteStall">
+        delete from stall where id=#{stallId};
+    </delete>
+
+    <select id="stallInfo" resultType="com.taobao.groundstandard.entities.Stall" parameterType="long">
+        SELECT * FROM stall,
+        (SELECT manage FROM manager WHERE id=#{loginId}) AS a
+        WHERE id LIKE CONCAT('%',a.manage,'%');
+    </select>
+    <select id="useInfo" resultType="com.taobao.groundstandard.entities.Intermediate" parameterType="long">
+        SELECT * FROM manager_user_stall,
+        (SELECT manage FROM manager WHERE id=#{loginId}) AS a
+        WHERE stall_id LIKE CONCAT('%',a.manage,'%');
+    </select>
+    <select id="findManage" resultType="java.lang.String">
+        SELECT manage FROM manager WHERE id=#{loginId}
+    </select>
+    <select id="findStall" resultType="com.taobao.groundstandard.entities.Stall">
+        SELECT * FROM stall WHERE id=#{stallId}
+    </select>
+</mapper>

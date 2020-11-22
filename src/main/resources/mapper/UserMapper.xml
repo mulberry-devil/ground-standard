@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.taobao.groundstandard.dao.UserMapper">
+    <resultMap id="userMap" type="com.taobao.groundstandard.entities.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="phone" column="phone"/>
+        <result property="integral" column="integral"/>
+    </resultMap>
+    <insert id="success">
+        insert into user(password,name,phone,sex,integral) values (#{password},#{name},#{phone},#{sex},100);
+    </insert>
+
+    <select id="findById" resultMap="userMap" parameterType="long">
+        select * from user where id=#{loginId};
+    </select>
+    <select id="judge" resultType="integer" parameterType="long">
+        SELECT integral FROM `user` WHERE id=#{loginId};
+    </select>
+    <select id="getPass" resultType="java.lang.String">
+        select password from user where id=#{loginId};
+    </select>
+</mapper>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3 th:text="${session.loginId}"></h3>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>sex</th>
+        <th>phone</th>
+        <th>integral</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${session.user.id}"></td>
+        <td th:text="${session.user.name}"></td>
+        <td th:text="${session.user.sex}==0?'男':'女'"></td>
+        <td th:text="${session.user.phone}"></td>
+        <td th:text="${session.user.integral}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<table>
+    <h3 th:text="${session.msg}"></h3>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>position</th>
+        <th>area</th>
+        <th>info</th>
+        <th>button</th>
+    </tr>
+    </thead>
+    <tbody>
+    <form th:action="@{/user/judge(stallId=${stall.id})}" method="post">
+        <tr>
+            <td th:text="${stall.id}"></td>
+            <td th:text="${stall.position}"></td>
+            <td th:text="${stall.area}"></td>
+            <td th:text="${stall.info}"></td>
+            <td>
+                <button th:text="${status}==true?'预约':'已被预约'" th:disabled="${status}==true?false:true">预约</button>
+                <a th:if="${status}==false and ${uid}==${session.loginId}"
+                   th:text="取消" class="deleteBtn" th:attr="update_date=@{/user/updatedate(stallId=${stall.id})}"/>
+            </td>
+        </tr>
+    </form>
+    </tbody>
+</table>
+<form id="updatedate" method="post"/>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.0.0/jquery.js}"></script>
+<script>
+    $(".deleteBtn").click(function () {
+        $("#updatedate").attr("action", $(this).attr("update_date")).submit();
+    })
+</script>
+</body>
+</html>
